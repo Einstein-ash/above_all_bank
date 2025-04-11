@@ -79,7 +79,7 @@ const PinEntryScreen = () => {
 
       {showNumpad && (
         <div className="numpad">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'X', 0, '✔'].map((val, idx) => (
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'x', 0, '✔'].map((val, idx) => (
             <button
                 key={idx}
                 className={`num-btn ${val === '✔' ? 'submit' : ''}`}
