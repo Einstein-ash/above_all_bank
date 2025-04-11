@@ -1,0 +1,295 @@
+
+  
+  .main_scanner_container {
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 10; 
+    overflow: hidden;
+  }
+
+  .scanner_header{
+    position : absolute;
+
+    height: 13vh;
+    width: 99vw;
+  
+    display: flex;
+    flex-direction: column;
+  
+    z-index: 10002;
+    top : 0 ;
+
+
+  }
+
+  .top-nav-bar {
+    position: relative;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent; /* black background */
+    padding: 10px 16px;
+    height: 50px;
+
+  }
+  
+  .nav-right-icons {
+    display: flex;
+    gap: 30px;
+  }
+
+  .scanner_torch_on{
+    position: relative;
+    background-color: white;
+    border-radius: 50%;
+    padding : 3px 3px;
+    
+
+  }
+  
+  .nav-icon {
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+
+
+
+  .full_screen_video {
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    /* position: fixed;  */
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+  }
+
+
+
+
+  .scanner_black_shadow_up_left {
+    position :absolute; 
+    top: 0;
+    left: 0;
+    
+    /* z-index: 11; */
+    height: 100vh;
+    width: 100vw;
+    /* background-color: rgba(0, 0, 0, 0.699); */
+    background-image: url(".././assets/images/shadow_GOOD.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%;
+
+    opacity: 0.8;
+    /* backface-visibility: ; */
+  }
+
+  
+  .scanner_black_shadow_up_middle {
+    position :absolute; 
+    top: 0;
+    left: 10vw;
+    
+    /* z-index: 11; */
+    height: 10vh;
+    width: 80vw;
+    background-color: rgba(0, 0, 0, 0.699);
+  }
+
+
+
+  .scanner-box {
+    position: relative;
+    height: 40vh;
+    width: 80vw;
+    margin: auto;
+    background-color: transparent;
+  }
+
+
+/*   
+.scanner_inner_border0{
+  content: '';
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 40vh;
+  width: 80vw;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.699); 
+  border-radius: 0.1%;
+  z-index: -1;
+}
+  
+.scanner_inner_border1{
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 2px;
+  height: 39vh;
+  width: 79vw;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.699); 
+  border-radius: 0.2%;
+  z-index: -1;
+} */
+  
+/* .scanner_inner_border2{
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 38vh;
+  width: 78vw;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.699); 
+  border-radius: 0.2%;
+  z-index: -1;
+}
+
+ */
+
+  
+  .corner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 6px solid transparent;
+   
+  }
+  
+  .top-left {
+    top: 2vh;
+    left: 2vw;
+    border-top-color: #EA4335; /* red */
+    border-left-color: #EA4335;
+    border-top-left-radius: 30px;
+    
+  }
+  
+  .top-right {
+    top: 2vh;
+    right: -1vw;
+    border-top-color: #FDBD00; 
+    border-right-color: #FDBD00;
+    border-top-right-radius: 30px;
+  }
+  
+  .bottom-left {
+    bottom: -1vh;
+    left: 2vw;
+    border-bottom-color: #3A81F1; /* blue */
+    border-left-color: #3A81F1;
+    border-bottom-left-radius: 30px;
+  }
+  
+  .bottom-right {
+    bottom: -1vh;
+    right: -2vw;
+    border-bottom-color: #2DA94F; /* green */
+    border-right-color: #2DA94F;
+    border-bottom-right-radius: 30px;
+  }
+  
+
+  
+  .scanner_black_shadow_middle_border {
+    position :fixed; 
+    top: 10vh;
+    left: 10vw;
+    
+ 
+    height: 30vh;
+    width: 60vw;
+    /* background-color: rgba(0, 0, 0, 0.699); */
+
+    color : white;
+    font-size: 100px;
+  }
+
+
+  .scanner_black_shadow_up_right {
+    position :fixed; 
+    top: 0;
+    right: 0;
+    
+    /* z-index: 11; */
+    height: 50vh;
+    width: 10vw;
+    background-color: rgba(0, 0, 0, 0.699);
+
+  }
+
+
+  .scanner_black_shadow_bottom {
+    position :fixed; 
+    top: 50vh;
+    left: 0;
+    
+    /* z-index: 11; */
+    height: 50vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.699);
+  }
+
+
+/* UploadButton.css */
+.scanner_upload_btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #e5e5e5;
+  color: #333;
+  border: none;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+
+  position: absolute;
+  top : 54vh;
+  z-index: 10000;
+  left : 24vw;
+}
+
+.scanner_upload_icon {
+  font-size: 20px;
+}
+
+.scanner_footer_dash{
+  margin-top: 8px;
+  margin-bottom: 10px;
+  border: 1px solid white;
+  background-color: white;
+  height: 1px;
+  color : white;
+  width: 20px;
+}
+
+.scanner_footer{
+  position : absolute;
+  border : 1px solid #303030;
+  height: 13vh;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 3px;
+
+  z-index: 10001;
+  bottom : 0 ;
+  color : white;
+  background-color: #303030;
+  border-top-right-radius:8%;
+  border-top-left-radius:8%;
+}

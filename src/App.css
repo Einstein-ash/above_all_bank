@@ -1,5 +1,15 @@
+
+
 .App {
   text-align: center;
+  /* background-color: black; */
+  color: grey;
+  /* height: 100vh;
+  width: auto; */
+}
+
+* {
+  margin : 0;
 }
 
 .App-logo {

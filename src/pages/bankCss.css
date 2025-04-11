@@ -1,0 +1,41 @@
+.main_container{
+    /* border : 2px solid black; */
+    /* margin : 10px 10px; */
+    height: 100vh;
+    width: 100%;
+    /* margin-left : 25%; */
+    background-image:  url(".././assets//images/home1_a_p.png");
+    background-size:contain ;
+    background-repeat: no-repeat;
+
+}
+
+.home2_image{
+    height: 100vh;
+    width: 100%;
+    background-image:  url(".././assets//images/home2_a_p.png");
+    background-size:contain ;
+    background-repeat: no-repeat;
+}
+
+.home3_image{
+    height: 90vh;
+    width: 100%;
+    background-image:  url(".././assets//images/home3_a_p.png");
+    background-size:contain ;
+    background-repeat: no-repeat;
+}
+
+/*  ------------SCanner is here------------ */
+
+
+.scanner_box{
+
+    /* border : 1px solid black; */
+    height: 100px;
+    width: 100px;
+    float: left;
+    position : relative;
+    top : 280px;
+    left : 20px;
+}

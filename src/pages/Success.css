@@ -1,0 +1,183 @@
+.success_container {
+    background-color: white;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  .empty_container_above_success{
+    height: 35vh;
+  }
+  
+  .lottie-wrapper {
+    /* border : 1px solid red; */
+  }
+
+
+ .move-up{
+    transition: transform 1s ease-in-out;
+  }
+  
+  .lottie-wrapper.move-up_success_logo {
+    transition: transform 1s ease-in-out;
+    transform:  translateY(-1px) scale(1.3) ;; 
+  }
+
+  .move-up {
+    transform: translateY(-200px) ; 
+  }
+
+  .success_data{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* border : 1px solid black; */
+
+  }
+  
+
+  .empty_space_success{
+    height: 15vh;
+    /* border : 1px solid red; */
+                              
+  }
+
+
+  .success_amount{
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .success_user_name{
+    font-size: 1.5rem;
+    font-weight: 300;
+    /* margin-bottom: 20px; */
+  }
+
+
+  .success_transaction_id{
+    font-size: 1rem;
+    font-weight: 300;
+    /* margin-bottom: 20px; */
+  }
+
+  .success_time{
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+
+  .success_footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    padding: 0 20px;
+    background: white; 
+    z-index: 100;
+  }
+  
+  .success_btn_share_ss,
+  .success_btn_done {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .success_btn_share_ss {
+    background-color: white;
+    color: #1a73e8;
+    border: 1px solid #d2e3fc;
+    padding: 12px 20px 12px 20px;
+  }
+  
+  .success_btn_done {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 12px 30px 12px 30px;
+  }
+  
+
+
+
+
+
+
+  .loader-screen {
+    background-color: white;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #1a73e8; /* blue like Google Pay */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+  
+  .loading-text {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #000;
+    font-weight: 500;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .main-content {
+    padding: 20px;
+    text-align: center;
+  }
+  
+
+
+
+
+
+
+
+
+
+
+  .success_details_fade {
+    animation: fadeInUp 4s ease-in forwards;
+    opacity: 0;
+  }
+  
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      /* transform: translateY(10px); */
+    }
+    100% {
+      opacity: 1;
+      /* transform: translateY(0); */
+    }
+  }
+  
