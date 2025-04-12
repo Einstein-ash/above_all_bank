@@ -141,7 +141,7 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    background-color: #eee9e9;
+    background-color: #e3e1e1e8;
     /* background-color: #ffffff; */
     padding: 12px 16px;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
@@ -153,8 +153,10 @@
   
 .num-btn {
     font-size: 30px;
-    font-weight: 400;
+    font-weight: 500;
+    font: bold;
     padding: 10px;
+    padding-top : 8px;
     border: none;
     background-color: transparent;
     color: #08287f;    /* good by me    */
@@ -176,8 +178,8 @@
     background-size: cover;
 
     background-repeat: no-repeat;
-    height: 48px;
-    width: 48px;
+    height: 47px;
+    width: 47px;
     margin-left: 23px;
     padding-top: -200px;
     margin-top: -13px;
@@ -188,10 +190,10 @@
     /* border : 1px solid red; */
     background-size: cover;
     background-repeat: no-repeat;
-    height: 20px;
-    width: 26px;
-    margin-left: 33px;
-    margin-top: -8px;
+    height: 18px;
+    width: 23px;
+    margin-left: 36px;
+    margin-top: -3px;
 }
 
 
