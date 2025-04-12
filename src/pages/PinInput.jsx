@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './PinEntryScreen.css';
 
@@ -51,6 +51,13 @@ const PinEntryScreen = () => {
     setPin((prev) => prev.slice(0, -1));
   }
 
+
+  useEffect(() => {
+
+    if(showPinError && navigator.vibrate) {
+        navigator.vibrate(40);
+    }
+  }, [showPinError])
 
   return (
     <div className="pin-screen">
