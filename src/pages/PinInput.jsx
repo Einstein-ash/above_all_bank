@@ -13,11 +13,12 @@ const PinEntryScreen = () => {
     const banking_name = location.state?.banking_name;
 
   const [pin, setPin] = useState([]);
-  const [showNumpad, setShowNumpad] = useState(true);
-  const [showPinError, setShowPinError] = useState(true);
+  const [showNumpad, setShowNumpad] = useState(false);
+  const [showPinError, setShowPinError] = useState(false);
 
   const handleNumpadClick = (val) => {
 
+    setShowPinError(false);
     // if (navigator.vibrate) navigator.vibrate(10); // 10ms light vibration
 
     if (val === 'X') {
@@ -30,13 +31,20 @@ const PinEntryScreen = () => {
 
   };
 
-  const handlePinInput = () => {
-    navigate('/success', {
-      state : {
-        amountInput,
-        banking_name,
-      }
-    }); 
+  const handlePinSubmit = () => {
+
+    if(pin.length < 6 ){
+      setShowPinError(true);
+      return ;
+    }
+    else {
+      navigate('/success', {
+        state : {
+          amountInput,
+          banking_name,
+        }
+      }); 
+    }
   };
 
   const handlePinCross = () => {
@@ -60,8 +68,8 @@ const PinEntryScreen = () => {
           <p className="label">Sending:</p>
         </div>
         <div className="right">
-          <p className="recipient">{banking_name}</p>
-          <p className="amount">₹ {amountInput}.00</p>
+          <p className="recipient">{banking_name ? banking_name : 'Ramesh Kumar'}</p>
+          <p className="amount">₹ {amountInput ? amountInput : 100}.00</p>
         </div>
       </div>
 
@@ -106,7 +114,7 @@ const PinEntryScreen = () => {
                 className="num-btn"
                 onClick={() => {
                   if (val === '✔') {
-                    handlePinInput();
+                    handlePinSubmit();
                   } else if(val === 'x') {
                     handlePinCross();
                   }
