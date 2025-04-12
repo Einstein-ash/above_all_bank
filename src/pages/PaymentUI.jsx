@@ -123,13 +123,13 @@ useEffect(() => {
         <div className="avatar">{userData.name.charAt(0)}</div>
         <div className="name-info">
           <p className="paying-name">
-            Paying <strong>{userData.name}</strong>
+            Paying <strong>{userData.name ?  userData.name : "Ramesh Kumar"}</strong>
           </p>
           <p className="bank-name">
             <p className="verify_icon"></p>
-            Banking name : <strong> &nbsp;{userData.banking_name}</strong>
+            Banking name : <strong> &nbsp;{userData.banking_name ? userData.banking_name : "Ramesh Kumar"}</strong>
           </p>
-          <p className="upi-info">UPI ID: {userData.upi_id}</p>
+          <p className="upi-info">UPI ID: {userData.upi_id ? userData.upi_id : "kumarramesh091@oksbi"}</p>
         </div>
       </div>
 
