@@ -44,7 +44,7 @@ const Scanner = () => {
 
     if (brightness < 40 && !torchOn) {
       toggleFlashlight(); // turn ON
-    } else if (brightness >= 40 && torchOn) {
+    } else if (brightness >= 20 && torchOn) {
       toggleFlashlight(); // turn OFF
     }
 
