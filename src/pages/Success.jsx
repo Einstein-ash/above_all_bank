@@ -105,7 +105,7 @@ const Success = () => {
     return (
       <div className="loader-screen">
         <div className="spinner"></div>
-        <p className="loading-text">Paying {banking_name ? banking_name : " Jai Kishan"} ₹{amountInput ? amountInput : 100}</p>
+        <p className="loading-text">Paying {banking_name ? banking_name : "Ramesh Kumar"} ₹{amountInput ? amountInput : 100}</p>
       </div>
     );
   }
@@ -124,7 +124,7 @@ const Success = () => {
           <p className="success_amount">
             ₹{amountInput ? amountInput : 100}.00
           </p>
-          <p className="success_user_name">Paid to {banking_name ? banking_name : " Jai Kishan"}</p>
+          <p className="success_user_name">Paid to {banking_name ? banking_name : " Ramesh Kumar"}</p>
 
           <div className="empty_space_success"></div>
 
