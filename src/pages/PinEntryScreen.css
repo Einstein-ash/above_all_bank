@@ -102,7 +102,7 @@
   
 .warning_box{
     background-color: #ffe8b5;
-    padding: 10px;
+    padding: 3px 10px;
     display: flex;
     align-items: center;
     font-weight: 600;
