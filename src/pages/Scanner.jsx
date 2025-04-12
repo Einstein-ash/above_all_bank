@@ -19,6 +19,8 @@ const Scanner = () => {
   const navigate = useNavigate();
   const [qrResult, setQrResult] = useState('');
   const [scanning, setScanning] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+
 
   const [torchOn, setTorchOn] = useState(false);
   const trackRef = useRef(null);
@@ -201,13 +203,26 @@ const Scanner = () => {
 
   return (
     <div className="main_scanner_container">
-      <video
+      {/* <video
         ref={videoRef}
         autoPlay
         playsInline
         muted
         className="full_screen_video"
-      />
+      /> */}
+
+    <video
+      ref={videoRef}
+      autoPlay
+      playsInline
+      muted
+      onCanPlay={() => setVideoReady(true)}
+      className="full_screen_video"
+    />
+
+{!videoReady && <div className="video-black-overlay"></div>}
+
+
       <canvas ref={canvasRef} style={{ display: 'none' }} />
 
 

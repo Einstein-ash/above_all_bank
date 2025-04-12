@@ -10,6 +10,19 @@
     overflow: hidden;
   }
 
+
+  .video-black-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 0;
+  }
+
+  
+
   .scanner_header{
     position : absolute;
 
@@ -24,6 +37,23 @@
 
 
   }
+
+
+
+  .hidden {
+    display: none;
+  }
+  
+  .black-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 9999;
+  }
+  
 
   .top-nav-bar {
     position: relative;
