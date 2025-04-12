@@ -99,19 +99,26 @@ useEffect(() => {
 
   setUserData(prev => ({
     ...prev,
-    upi_id: extractBetween(qrText + "&aid=", "pay?pa=", "&pn="),
+    upi_id: extractBetween(qrText + "&pn=", "pa=", "&"),
+      
     name: shorter(
-      extractBetween(qrText + "&aid=", "&pn=", "&aid="),
+      extractBetween(qrText + "&aid=", "pn=", "&"),
+      // extractBetween(qrText + "&aid=", "&pn=", "&aid="),
       shorter(
+        extractBetween(qrText + "&cu=", "pn=", "&"),
         extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
+        // extractBetween(qrText + "&mc=", "&pn=", "&mc="),
       )
     ),
+    
     banking_name: shorter(
-      extractBetween(qrText + "&aid=", "&pn=", "&aid="),
+      extractBetween(qrText + "&aid=", "pn=", "&"),
+      // extractBetween(qrText + "&aid=", "&pn=", "&aid="),
       shorter(
+        extractBetween(qrText + "&cu=", "pn=", "&"),
         extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
+        // extractBetween(qrText + "&mc=", "&pn=", "&"),
+        // extractBetween(qrText + "&mc=", "&pn=", "&mc="),
       )
     ).toUpperCase(),
 
