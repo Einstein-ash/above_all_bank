@@ -14,6 +14,7 @@ const PinEntryScreen = () => {
 
   const [pin, setPin] = useState([]);
   const [showNumpad, setShowNumpad] = useState(true);
+  const [showPinError, setShowPinError] = useState(true);
 
   const handleNumpadClick = (val) => {
 
@@ -81,8 +82,22 @@ const PinEntryScreen = () => {
           </p>
       </div>
 
-      {showNumpad && (
+     
 
+      {showNumpad && (
+        <div className='numpad_wrapper'>
+
+              {showPinError && (
+                <div className='pin_error_container'>
+                  <p className='pin_error_text'>Please enter 6 digit UPI PIN</p>
+                  <button 
+                    className='btn_pin_error' 
+                    onClick={() => setShowPinError(false)}>
+                      DISMISS
+                  </button>
+
+                </div>
+              )}
 
           <div className="numpad">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'x', 0, '✔'].map((val, idx) => (
@@ -117,7 +132,7 @@ const PinEntryScreen = () => {
             ))}
           </div>
 
-
+          </div>
       )}
     </div>
   );
