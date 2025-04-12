@@ -113,38 +113,23 @@ useEffect(() => {
     upi_id: extractBetween(qrText + "&pn=", "pa=", "&"),
       
     name: shortest(
-        extractBetween(qrText + "&aid=", "pn=", "&"),
-        extractBetween(qrText + "&aid=", "&pn=", "&aid="),
-        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
-
-        extractBetween(qrText + "&aid=", "&pn=", "&"),
-        extractBetween(qrText + "&aid=", "&pn=", "&aid="),
-
-        extractBetween(qrText + "&", "pn=", "&"),
-        extractBetween(qrText + "&", "&pn=", "&"),
-        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
+      extractBetween(qrText + "&aid=", "&pn=", "&"),
+      extractBetween(qrText + "&aid=", "&pn=", "&aid="),
+      extractBetween(qrText + "&cu=", "&pn=", "&cu="),
+      extractBetween(qrText + "&mc=", "&pn=", "&mc="),
+      extractBetween(qrText + "&", "pn=", "&"),
+      extractBetween(qrText + "&", "&pn=", "&")
 
         
     ),
     
     banking_name: shortest(
-        extractBetween(qrText + "&aid=", "&pn=", "&"),
-        extractBetween(qrText + "&aid=", "&pn=", "&aid="),
-
-        extractBetween(qrText + "&", "pn=", "&"),
-        extractBetween(qrText + "&", "&pn=", "&"),
-        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
-        extractBetween(qrText + "&aid=", "pn=", "&"),
-        extractBetween(qrText + "&aid=", "&pn=", "&aid="),
-        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
-
-
+      extractBetween(qrText + "&aid=", "&pn=", "&"),
+      extractBetween(qrText + "&aid=", "&pn=", "&aid="),
+      extractBetween(qrText + "&cu=", "&pn=", "&cu="),
+      extractBetween(qrText + "&mc=", "&pn=", "&mc="),
+      extractBetween(qrText + "&", "pn=", "&"),
+      extractBetween(qrText + "&", "&pn=", "&")
     ).toUpperCase(),
 
   }));
