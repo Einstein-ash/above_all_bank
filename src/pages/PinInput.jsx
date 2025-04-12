@@ -54,7 +54,8 @@ const PinEntryScreen = () => {
 
   useEffect(() => {
 
-    if(!showPinError && navigator.vibrate) {
+    if(showPinError && navigator.vibrate) {
+      // console.log("now vib");
         navigator.vibrate(40);
     }
   }, [showPinError]);
