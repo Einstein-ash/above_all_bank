@@ -154,12 +154,14 @@
     padding: 10px;
     border: none;
     background-color: transparent;
-    color: #08287f;
+    color: #08287f;    /* good by me    */
+    /* color: #0b57cf; */
 }
   
 .num-btn.submit {
     color: white;
-    background-color: #08287f;
+    background-color: #08287f;    /* good by me    */
+    /* background-color: #0b57cf; */
     border-radius: 50%;
     width: 60px;
     margin-left : 25px;
