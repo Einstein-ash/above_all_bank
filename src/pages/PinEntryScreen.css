@@ -107,7 +107,7 @@
     align-items: center;
     font-weight: 500;
     font-size: 12px;
-    color: #4b4b4bc5;
+    color: #292828c5;
     border: none;
     border-radius: 10px 10px;
     margin: 10px 20px  10px 20px;
@@ -120,8 +120,8 @@
   
 .warning_box .cicular_warning_avatar {
     width: 33px;
-    height: 35px;
-    background-color: #f59910db;
+    height: 33px;
+    background-color: #de8c12db;
     color: white;
     font-size: 20px;
     display: flex;
