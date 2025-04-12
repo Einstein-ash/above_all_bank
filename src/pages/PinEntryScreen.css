@@ -149,19 +149,30 @@
     box-sizing: border-box;
   }
   
-  /* no fixed position on pin_error_container anymore */
+
   .pin_error_container {
     background-color: rgba(128, 128, 128, 0.429);
-    padding: 15px 10px;
+    padding: 16px 10px;
     display: flex;
     justify-content: space-between;
     box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+
+    transform: translateY(20px);   
+    opacity: 0;                    
+    animation: slideUp 0.4s ease-out forwards;
+  }
+  
+  @keyframes slideUp {
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
 
   .pin_error_text{
         font-size : 14px;
-        color : red;
+        color : #e00000;
         padding-left: 10px;
   }
 
