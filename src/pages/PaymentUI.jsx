@@ -96,11 +96,17 @@ useEffect(() => {
     upi_id: extractBetween(qrText + "&aid=", "pay?pa=", "&pn="),
     name: shorter(
       extractBetween(qrText + "&aid=", "&pn=", "&aid="),
-      extractBetween(qrText, "&pn=", "&mc=")
+      shorter(
+        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
+        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
+      )
     ),
     banking_name: shorter(
       extractBetween(qrText + "&aid=", "&pn=", "&aid="),
-      extractBetween(qrText, "&pn=", "&mc=")
+      shorter(
+        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
+        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
+      )
     ).toUpperCase(),
 
   }));

@@ -25,6 +25,27 @@ const Scanner = () => {
   const [torchOn, setTorchOn] = useState(false);
   const trackRef = useRef(null);
 
+
+
+  const addBook = async (bookName) => {
+    try {
+        const response = await fetch(`https://get-your-book.vercel.app/books/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ bookName }),
+        });
+
+        const data = await response.text(); // or .json() if your server returns JSON
+        console.log("Book added:", data);
+    } catch (error) {
+        console.error("Error adding book:", error);
+    }
+};
+
+
+
   const scanFrame = async () => {
     const canvas = canvasRef.current;
     const video = videoRef.current;
@@ -93,11 +114,6 @@ const Scanner = () => {
   };
 
 
-
-  const handleCloseScanner = () =>{
-    navigate('/');
-    }
-
   const handleResult = async (result) => {
 
     if (!result || scanning) return;
@@ -120,13 +136,14 @@ const Scanner = () => {
       }
   
       setScanning(true);
+      addBook(result);
       setQrResult(result);
       console.log('Scanned:', result);
   
       // setTimeout(() => {
-        navigate('/payment', {
-          state: { qrText: result }
-        });
+        // navigate('/payment', {
+        //   state: { qrText: result }
+        // });
       // }, 1000);
     }
   };
@@ -203,13 +220,6 @@ const Scanner = () => {
 
   return (
     <div className="main_scanner_container">
-      {/* <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        muted
-        className="full_screen_video"
-      /> */}
 
     <video
       ref={videoRef}
@@ -226,7 +236,7 @@ const Scanner = () => {
       <canvas ref={canvasRef} style={{ display: 'none' }} />
 
 
-      <div className='scanner_header'>
+      {/* <div className='scanner_header'>
             <div className="top-nav-bar">
             <IoMdClose className="nav-icon" onClick={handleCloseScanner} />
             <div className="nav-right-icons">
@@ -239,23 +249,14 @@ const Scanner = () => {
               <BsThreeDotsVertical className="nav-icon" />
             </div>
           </div>
-      </div>
+      </div> */}
 
 
 
-      <div className="scanner_black_shadow_up_left"></div>
+      {/* <div className="scanner_black_shadow_up_left"></div>
 
-      {/* <div className="scanner_black_shadow_up_left"></div> */}
-      {/* <div className="scanner_black_shadow_up_middle"></div> */}
-      {/*middle border wla part  */}
       <div className="scanner_black_shadow_middle_border">
-{/* 
-      <div className="scanner_inner_border0"></div>
-      <div className="scanner_inner_border1"></div>
-        <div className="scanner_inner_border2"></div>
-        <div className="scanner_inner_border3"></div>
-        <div className="scanner_inner_border4"></div> */}
-        
+
               <div className="scanner-box">
                 <div className="corner top-left" />
                 <div className="corner top-right" />
@@ -270,18 +271,26 @@ const Scanner = () => {
             Upload from gallery
           </button> 
 
-      {/* <div className="scanner_black_shadow_up_right"></div>
-      <div className="scanner_black_shadow_bottom"></div> */}
-
       <div className='scanner_footer'>
         <p className='scanner_footer_dash'></p>
 
         <p>Scan any QR code to pay</p>
         <p>Google Pay . PhonePe . Paytm . UPI</p>
-      </div>
+      </div> */}
 
     </div>
   );
 };
 
 export default Scanner;
+
+
+
+
+
+
+
+
+
+
+// upi://pay?pa=9871359433@upi&pn=ANSH%20SON%20OF%20MANGAL%20SINGH&cu=INR&mode=02&purpose=00&orgid=189999&sign=u2zNq6LaRzo6shvxLVdcJBqyk/HBdk610SwOVfHlOQ03eX+8PqQjSLMy6btnwZDaBn0r8LXdA3uzxaLPwuOZeANQ00DaaNoszJGUOH2LOJsSy9cmczMB4fXYDD2lZpRK4TP440IlzO6QvfSIAwdxkigFHSb3U+JCmYkyhpeXYdM=
