@@ -16,7 +16,7 @@ function App() {
 
       <Router>
       <Routes>
-        <Route path="/" element={<PinEntryScreen />} />
+        {/* <Route path="/" element={<PinEntryScreen />} /> */}
         {/* <Route path="/" element={<Success />} /> */}
         {/* <Route path="/" element={<Scanner />} /> */}
         <Route path="/" element={<Bank />} />
