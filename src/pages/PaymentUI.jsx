@@ -87,6 +87,12 @@ const PaymentScreen = () => {
 // 
 
 
+const handleCloseScanner = () => {
+  navigate('/scanner');
+}
+
+
+
   
 useEffect(() => {
   if (!qrText) return;
@@ -115,7 +121,7 @@ useEffect(() => {
   return (
     <div className="screen">
       <div className="top-icons">
-        <span className="close">✕</span>
+        <span className="close" onClick={handleCloseScanner}>✕</span>
         <span>
           <div className="exclamation">
             <OctagonAlert    />
