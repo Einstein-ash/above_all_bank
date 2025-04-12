@@ -54,10 +54,10 @@ const PinEntryScreen = () => {
 
   useEffect(() => {
 
-    if(showPinError && navigator.vibrate) {
+    if(!showPinError && navigator.vibrate) {
         navigator.vibrate(40);
     }
-  }, [showPinError])
+  }, [showPinError]);
 
   return (
     <div className="pin-screen">
