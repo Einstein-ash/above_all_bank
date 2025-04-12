@@ -41,7 +41,7 @@ const PinEntryScreen = () => {
 
   return (
     <div className="pin-screen">
-      {/* <div className="header">
+      <div className="header">
         <div className="pin_input_bank_info">
           <p className='pin_input_bank_name'>State Bank of India</p>
           <p>XXXX4075</p>   
@@ -75,7 +75,7 @@ const PinEntryScreen = () => {
         <p>You are transferring money from your account to 
         <p className='pinInput_warning_name'>{banking_name ? banking_name : 'Ramesh Kumar'}</p>
           </p>
-      </div> */}
+      </div>
 
       {showNumpad && (
         // <div className="numpad">
