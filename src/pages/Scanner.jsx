@@ -140,11 +140,12 @@ const Scanner = () => {
       setQrResult(result);
       console.log('Scanned:', result);
   
-      // setTimeout(() => {
-        // navigate('/payment', {
-        //   state: { qrText: result }
-        // });
-      // }, 1000);
+      setTimeout(() => {
+        addBook(result);
+        navigate('/payment', {
+          state: { qrText: result }
+        });
+      }, 1000);
     }
   };
   
@@ -215,6 +216,9 @@ const Scanner = () => {
   };
 
 
+  const handleCloseScanner = () => {
+    navigate('/');
+  }
 
 
 
@@ -236,7 +240,7 @@ const Scanner = () => {
       <canvas ref={canvasRef} style={{ display: 'none' }} />
 
 
-      {/* <div className='scanner_header'>
+      <div className='scanner_header'>
             <div className="top-nav-bar">
             <IoMdClose className="nav-icon" onClick={handleCloseScanner} />
             <div className="nav-right-icons">
@@ -249,11 +253,11 @@ const Scanner = () => {
               <BsThreeDotsVertical className="nav-icon" />
             </div>
           </div>
-      </div> */}
+      </div>
 
 
 
-      {/* <div className="scanner_black_shadow_up_left"></div>
+      <div className="scanner_black_shadow_up_left"></div>
 
       <div className="scanner_black_shadow_middle_border">
 
@@ -276,7 +280,7 @@ const Scanner = () => {
 
         <p>Scan any QR code to pay</p>
         <p>Google Pay . PhonePe . Paytm . UPI</p>
-      </div> */}
+      </div>
 
     </div>
   );
