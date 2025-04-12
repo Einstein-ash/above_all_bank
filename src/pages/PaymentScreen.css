@@ -229,7 +229,7 @@
   }
 
   .check_now_balance{
-    color : rgb(61, 61, 221);
+    color : #345fd6;
     cursor : pointer;
     padding-top : 5px;
     font-weight: 300;
@@ -244,12 +244,12 @@
   
   
   .pay_button {
-    background-color: #2962ff;
+    background-color:#345fd6 ;
     color: white;
-    padding: 5px 8px;
+    padding: 8px 8px;
     border: none;
     border-radius : 24px 24px 24px 24px;
-    font-size : 20px ;
+    font-size : 15px ;
     font-weight: 600;
     cursor: pointer;
     margin : 10px;
@@ -267,6 +267,7 @@
   .bottom-logos .axis_logo {
 
     background-image: url("../assets/images/ax2.png");
+    filter: grayscale(1) brightness(3) invert(1);
     background-size: contain;
     background-repeat: no-repeat;
     height: 20px;
