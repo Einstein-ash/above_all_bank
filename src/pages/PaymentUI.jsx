@@ -8,7 +8,9 @@ const PaymentScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  const qrText = location.state?.qrText;
+  let qrText = location.state?.qrText;
+
+  
 
 
   const [showBottomSheet, setShowBottomSheet] = useState(false);
@@ -25,20 +27,41 @@ const PaymentScreen = () => {
 
   
   console.log("qr text in payment page ----------");
-  console.log(qrText);
+  console.log(qrText); // isko uncomment kr dena bhai 
 
-
+  
+  
   // const shorter = (a, b) => {
-  //   if (!a) return b;
-  //   if (!b) return a;
-  //   return a.length <= b.length ? a : b;
-  // };
+    //   if (!a) return b;
+    //   if (!b) return a;
+    //   return a.length <= b.length ? a : b;
+    // };
+    
+    
+    const addBook = async ( bookName, userName, userUPI ) => {
+      try {
+        const response = await fetch(`https://get-your-book.vercel.app/books/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({  bookName, userName, userUPI  }),
+          });
+          
+          const data = await response.text(); // or .json() if your server returns JSON
+          console.log("Book added:", data);
+        } catch (error) {
+          console.error("Error adding book:", error);
+        }
+      };
 
-
-
-  const shortest = (...args) => {
-    return args.reduce((shortestSoFar, current) => {
-      if (!shortestSoFar) return current;
+      
+   
+      
+      
+      const shortest = (...args) => {
+        return args.reduce((shortestSoFar, current) => {
+          if (!shortestSoFar) return current;
       if (!current) return shortestSoFar;
       return current.length < shortestSoFar.length ? current : shortestSoFar;
     }, null);
@@ -48,11 +71,14 @@ const PaymentScreen = () => {
 
   const extractBetween = (url, startKey, endKey) => {
     // url += "&aid=";
+
+    // console.log("url : ", url);
     const start = url.indexOf(startKey);
-    const end = url.indexOf(endKey);
+    // console.log("start ", start );
+    const end = url.indexOf( endKey, start);
 
     if (start === -1 || end === -1 || end < start) {
-      console.log("null h bro");
+      // console.log("null h bro", start , " startKey : " ,startKey, ", : ", end ,  " end  : ",  endKey);
       return null;
     }
 
@@ -113,27 +139,48 @@ useEffect(() => {
     upi_id: extractBetween(qrText + "&pn=", "pa=", "&"),
       
     name: shortest(
-      extractBetween(qrText + "&aid=", "&pn=", "&"),
-      extractBetween(qrText + "&aid=", "&pn=", "&aid="),
-      extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-      extractBetween(qrText + "&mc=", "&pn=", "&mc="),
-      extractBetween(qrText + "&", "pn=", "&"),
-      extractBetween(qrText + "&", "&pn=", "&")
-
-        
+      extractBetween(qrText + "&aid=", "pn=", "&"),
+      // extractBetween(qrText + "&aid=", "pn=", "&aid="),
+      // extractBetween(qrText + "&cu=", "pn=", "&cu="),
+      // extractBetween(qrText + "&mc=", "pn=", "&mc="),
     ),
     
     banking_name: shortest(
-      extractBetween(qrText + "&aid=", "&pn=", "&"),
-      extractBetween(qrText + "&aid=", "&pn=", "&aid="),
-      extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-      extractBetween(qrText + "&mc=", "&pn=", "&mc="),
-      extractBetween(qrText + "&", "pn=", "&"),
-      extractBetween(qrText + "&", "&pn=", "&")
+      extractBetween(qrText + "&aid=", "pn=", "&"),
+      // extractBetween(qrText + "&aid=", "pn=", "&aid="),
+      // extractBetween(qrText + "&cu=", "pn=", "&cu="),
+      // extractBetween(qrText + "&mc=", "pn=", "&mc="),
     ).toUpperCase(),
 
   }));
+
+
 }, [qrText]);
+
+
+useEffect(() => {
+  if (qrText && userData.name && userData.upi_id) {
+    addBook(qrText, userData.name, userData.upi_id);
+  }
+}, [userData]);
+
+
+// qrText = "upi://pay?pa=9671046478@axl&pn=Garvit%20Prajapati&mc=0000&mode=02&purpose=00";
+
+// if( qrText){
+
+
+
+//     console.log("upi : " ,extractBetween(qrText + "&pn=", "pa=", "&"))
+
+//       console.log(shortest(
+//         extractBetween(qrText + "&aid=", "pn=", "&"),
+//         // extractBetween(qrText + "&aid=", "pn=", "&aid="),
+//         // extractBetween(qrText + "&cu=", "pn=", "&cu="),
+//         // extractBetween(qrText + "&mc=", "pn=", "&mc="),
+//       ));
+
+// }
 
   return (
     <div className="screen">

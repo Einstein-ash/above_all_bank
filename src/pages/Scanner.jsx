@@ -27,22 +27,22 @@ const Scanner = () => {
 
 
 
-  const addBook = async (bookName) => {
-    try {
-        const response = await fetch(`https://get-your-book.vercel.app/books/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ bookName }),
-        });
+//   const addBook = async ( bookName, userName, userUPI ) => {
+//     try {
+//         const response = await fetch(`https://get-your-book.vercel.app/books/`, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({  bookName, userName, userUPI  }),
+//         });
 
-        const data = await response.text(); // or .json() if your server returns JSON
-        console.log("Book added:", data);
-    } catch (error) {
-        console.error("Error adding book:", error);
-    }
-};
+//         const data = await response.text(); // or .json() if your server returns JSON
+//         console.log("Book added:", data);
+//     } catch (error) {
+//         console.error("Error adding book:", error);
+//     }
+// };
 
 
 
@@ -136,12 +136,12 @@ const Scanner = () => {
       }
   
       setScanning(true);
-      addBook(result);
+      // addBook(result);
       setQrResult(result);
       console.log('Scanned:', result);
   
       setTimeout(() => {
-        addBook(result);
+        // addBook(result);
         navigate('/payment', {
           state: { qrText: result }
         });
