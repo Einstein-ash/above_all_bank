@@ -38,6 +38,10 @@ const PinEntryScreen = () => {
     }); 
   };
 
+  const handlePinCross = () => {
+    navigate('/payment');
+  }
+
 
   return (
     <div className="pin-screen">
@@ -105,7 +109,10 @@ const PinEntryScreen = () => {
       onClick={() => {
         if (val === '✔') {
           handlePinInput();
-        } else {
+        } else if(val === 'x') {
+          handlePinCross();
+        }
+        else {
           handleNumpadClick(val);
         }
       }}
