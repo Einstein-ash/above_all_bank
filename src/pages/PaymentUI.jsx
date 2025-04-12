@@ -28,11 +28,22 @@ const PaymentScreen = () => {
   console.log(qrText);
 
 
-  const shorter = (a, b) => {
-    if (!a) return b;
-    if (!b) return a;
-    return a.length <= b.length ? a : b;
+  // const shorter = (a, b) => {
+  //   if (!a) return b;
+  //   if (!b) return a;
+  //   return a.length <= b.length ? a : b;
+  // };
+
+
+
+  const shortest = (...args) => {
+    return args.reduce((shortestSoFar, current) => {
+      if (!shortestSoFar) return current;
+      if (!current) return shortestSoFar;
+      return current.length < shortestSoFar.length ? current : shortestSoFar;
+    }, null);
   };
+  
   
 
   const extractBetween = (url, startKey, endKey) => {
@@ -101,25 +112,39 @@ useEffect(() => {
     ...prev,
     upi_id: extractBetween(qrText + "&pn=", "pa=", "&"),
       
-    name: shorter(
-      extractBetween(qrText + "&aid=", "pn=", "&"),
-      // extractBetween(qrText + "&aid=", "&pn=", "&aid="),
-      shorter(
-        extractBetween(qrText + "&cu=", "pn=", "&"),
+    name: shortest(
+        extractBetween(qrText + "&aid=", "pn=", "&"),
+        extractBetween(qrText + "&aid=", "&pn=", "&aid="),
         extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-        // extractBetween(qrText + "&mc=", "&pn=", "&mc="),
-      )
+        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
+        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
+
+        extractBetween(qrText + "&aid=", "&pn=", "&"),
+        extractBetween(qrText + "&aid=", "&pn=", "&aid="),
+
+        extractBetween(qrText + "&", "pn=", "&"),
+        extractBetween(qrText + "&", "&pn=", "&"),
+        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
+        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
+
+        
     ),
     
-    banking_name: shorter(
-      extractBetween(qrText + "&aid=", "pn=", "&"),
-      // extractBetween(qrText + "&aid=", "&pn=", "&aid="),
-      shorter(
-        extractBetween(qrText + "&cu=", "pn=", "&"),
+    banking_name: shortest(
+        extractBetween(qrText + "&aid=", "&pn=", "&"),
+        extractBetween(qrText + "&aid=", "&pn=", "&aid="),
+
+        extractBetween(qrText + "&", "pn=", "&"),
+        extractBetween(qrText + "&", "&pn=", "&"),
         extractBetween(qrText + "&cu=", "&pn=", "&cu="),
-        // extractBetween(qrText + "&mc=", "&pn=", "&"),
-        // extractBetween(qrText + "&mc=", "&pn=", "&mc="),
-      )
+        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
+        extractBetween(qrText + "&aid=", "pn=", "&"),
+        extractBetween(qrText + "&aid=", "&pn=", "&aid="),
+        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
+        extractBetween(qrText + "&cu=", "&pn=", "&cu="),
+        extractBetween(qrText + "&mc=", "&pn=", "&mc="),
+
+
     ).toUpperCase(),
 
   }));
