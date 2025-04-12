@@ -13,7 +13,7 @@ const PinEntryScreen = () => {
     const banking_name = location.state?.banking_name;
 
   const [pin, setPin] = useState([]);
-  const [showNumpad, setShowNumpad] = useState(false);
+  const [showNumpad, setShowNumpad] = useState(true);
 
   const handleNumpadClick = (val) => {
 
@@ -41,7 +41,7 @@ const PinEntryScreen = () => {
 
   return (
     <div className="pin-screen">
-      <div className="header">
+      {/* <div className="header">
         <div className="pin_input_bank_info">
           <p className='pin_input_bank_name'>State Bank of India</p>
           <p>XXXX4075</p>   
@@ -75,32 +75,66 @@ const PinEntryScreen = () => {
         <p>You are transferring money from your account to 
         <p className='pinInput_warning_name'>{banking_name ? banking_name : 'Ramesh Kumar'}</p>
           </p>
-      </div>
+      </div> */}
 
       {showNumpad && (
-        <div className="numpad">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'x', 0, '✔'].map((val, idx) => (
-            <button
-                key={idx}
-                className={`num-btn ${val === '✔' ? 'submit' : ''}`}
-                onClick={() => {
-                  if (val === '✔') {
-                    handlePinInput();
-                  } else {
-                    handleNumpadClick(val);
-                  }
-                }}
-              >
-                {val}
-              </button>
+        // <div className="numpad">
+        //   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'x', 0, '✔'].map((val, idx) => (
+        //     <button
+        //         key={idx}
+        //         className={`num-btn ${val === '✔' ? 'submit' : ''}`}
+        //         onClick={() => {
+        //           if (val === '✔') {
+        //             handlePinInput();
+        //           } else {
+        //             handleNumpadClick(val);
+        //           }
+        //         }}
+        //       >
+        //         {val}
+        //       </button>
+        //   ))}
+        // </div>
+
+
+<div className="numpad">
+  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'x', 0, '✔'].map((val, idx) => (
+    <button
+      key={idx}
+      className="num-btn"
+      onClick={() => {
+        if (val === '✔') {
+          handlePinInput();
+        } else {
+          handleNumpadClick(val);
+        }
+      }}
+    >
+      {/* Show image for 'x' and '✔', else show the number */}
+      {val === '✔' ? (
+        <>
+          {/* <span className="real-val">{val}</span> */}
+          <p className="pinInput_tick_img"></p> 
+          
+        </>
+      ) : val === 'x' ? (
+        <>
+          {/* <span className="real-val">{val}</span> */}
+          <p className="pinInput_corss_img" ></p> 
+        </>
+      ) : (
+        val
+      )}
+    </button>
+  ))}
+</div>
 
 
 
 
 
 
-          ))}
-        </div>
+
       )}
     </div>
   );
