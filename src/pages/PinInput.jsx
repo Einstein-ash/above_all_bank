@@ -58,6 +58,17 @@ const PinEntryScreen = () => {
       // console.log("now vib");
         navigator.vibrate(40);
     }
+
+    if( showPinError) {
+      const disableErrorTimer = setTimeout(() => {
+      
+        setShowPinError(false);
+      }, 3000);
+
+      return () =>  clearTimeout(disableErrorTimer);;
+
+    }
+
   }, [showPinError]);
 
   return (
