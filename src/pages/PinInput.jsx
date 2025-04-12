@@ -39,7 +39,7 @@ const PinEntryScreen = () => {
   };
 
   const handlePinCross = () => {
-    navigate('/payment');
+    setPin((prev) => prev.slice(0, -1));
   }
 
 
@@ -82,64 +82,40 @@ const PinEntryScreen = () => {
       </div>
 
       {showNumpad && (
-        // <div className="numpad">
-        //   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'x', 0, '✔'].map((val, idx) => (
-        //     <button
-        //         key={idx}
-        //         className={`num-btn ${val === '✔' ? 'submit' : ''}`}
-        //         onClick={() => {
-        //           if (val === '✔') {
-        //             handlePinInput();
-        //           } else {
-        //             handleNumpadClick(val);
-        //           }
-        //         }}
-        //       >
-        //         {val}
-        //       </button>
-        //   ))}
-        // </div>
 
 
-<div className="numpad">
-  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'x', 0, '✔'].map((val, idx) => (
-    <button
-      key={idx}
-      className="num-btn"
-      onClick={() => {
-        if (val === '✔') {
-          handlePinInput();
-        } else if(val === 'x') {
-          handlePinCross();
-        }
-        else {
-          handleNumpadClick(val);
-        }
-      }}
-    >
-      {/* Show image for 'x' and '✔', else show the number */}
-      {val === '✔' ? (
-        <>
-          {/* <span className="real-val">{val}</span> */}
-          <p className="pinInput_tick_img"></p> 
+          <div className="numpad">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'x', 0, '✔'].map((val, idx) => (
+              <button
+                key={idx}
+                className="num-btn"
+                onClick={() => {
+                  if (val === '✔') {
+                    handlePinInput();
+                  } else if(val === 'x') {
+                    handlePinCross();
+                  }
+                  else {
+                    handleNumpadClick(val);
+                  }
+                }}
+              >
           
-        </>
-      ) : val === 'x' ? (
-        <>
-          {/* <span className="real-val">{val}</span> */}
-          <p className="pinInput_corss_img" ></p> 
-        </>
-      ) : (
-        val
-      )}
-    </button>
-  ))}
-</div>
-
-
-
-
-
+                {val === '✔' ? (
+                  <>
+                    <p className="pinInput_tick_img"></p> 
+                    
+                  </>
+                ) : val === 'x' ? (
+                  <>
+                    <p className="pinInput_corss_img" ></p> 
+                  </>
+                ) : (
+                  val
+                )}
+              </button>
+            ))}
+          </div>
 
 
       )}
