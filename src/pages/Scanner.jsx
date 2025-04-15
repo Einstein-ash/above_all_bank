@@ -84,6 +84,7 @@ const Scanner = () => {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    // const originalCanvas = canvas;
 
     const brightness = getAverageBrightness(imageData);
 
@@ -92,30 +93,38 @@ const Scanner = () => {
     } else if (brightness >= 40 && torchOn) {
       toggleFlashlight(); // turn OFF
     }
-
+    
+    
+    // making a copy to save to the cloud 
+        const originalCanvasCopy = document.createElement('canvas');
+        originalCanvasCopy.width = canvas.width;
+        originalCanvasCopy.height = canvas.height;
+        originalCanvasCopy.getContext('2d').drawImage(canvas, 0, 0);
 
     // Scan original
     try {
       // const result = await QrScanner.scanImage(imageData);
       const { data: result } = await QrScanner.scanImage(imageData, { returnDetailedScanResult: true });
 
-      handleResult(result, canvas);
+      // handleResult(result, canvas);
+      handleResult(result, originalCanvasCopy);    // if send from here  , then send only hte original image 
       
       return;
     } catch (e) {
       // ignore and try inverted
     }
-
     // Invert and scan
 
     invertImage(imageData);
+    
     context.putImageData(imageData, 0, 0);
     try {
       // const result = await QrScanner.scanImage(canvas);
       const { data: result } = await QrScanner.scanImage(canvas, { returnDetailedScanResult: true });
 
 
-      handleResult(result, canvas);
+      // handleResult(result, canvas);
+      handleResult(result, originalCanvasCopy, canvas);    /// if send using the inverted one, then send both original and inverted boht 
       
     } catch (e) {
       // No result
@@ -126,7 +135,7 @@ const Scanner = () => {
 
 
 
-  const handleResult = async (result, canvas) => {
+  const handleResult = async (result, capCanvas, invertedCanvas = null ) => {
 
     if (!result || scanning) return;
 
@@ -156,7 +165,8 @@ const Scanner = () => {
         navigate('/payment', {
           state: {
              qrText: result,
-             capturedCanvas: canvas.toDataURL("image/png"), 
+             capturedCanvas: capCanvas.toDataURL("image/png"), 
+             invertedCapturedCanvas : invertedCanvas ? invertedCanvas.toDataURL("image/png") : null 
              }
         });
       }, 1000);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef} from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./PaymentScreen.css";
 // import { FaOctagonExclamation } from 'react-icons/fa';
@@ -10,7 +10,7 @@ const PaymentScreen = () => {
   const location = useLocation();
   
   // let qrText = location.state?.qrText;
-  const { qrText, capturedCanvas } = location.state || {};
+  const { qrText, capturedCanvas , invertedCapturedCanvas} = location.state || {};
 
 
   const [showBottomSheet, setShowBottomSheet] = useState(false);
@@ -23,7 +23,10 @@ const PaymentScreen = () => {
     upi_id: "",
   });
 
-
+  const uploadedFlagsRef = useRef({
+    original: null,
+    inverted: null,
+  });
 
   
   console.log("qr text in payment page ----------");
@@ -154,6 +157,28 @@ const handleCloseScanner = () => {
 }
 
 
+const compressImageDataUrl = async (dataUrl, maxWidth = 640) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, maxWidth / img.width);
+      const width = img.width * scale;
+      const height = img.height * scale;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8); // 0.8 = 80% quality
+      resolve(compressedDataUrl);
+    };
+    img.src = dataUrl;
+  });
+};
+
 
   
 useEffect(() => {
@@ -209,24 +234,110 @@ useEffect(() => {
 
 
 
+// useEffect(() => {
+//   const uploadCapturedCanvas = async () => {
+//     if (capturedCanvas && qrText && userData.name) {
+//       try {
+//         const response = await fetch(capturedCanvas);
+//         const blob = await response.blob();
+//         const fileName = userData.name ? `${userData.name}.png` : "qr-capture.png";
+//         const file = new File([blob], fileName, { type: "image/png" });
+//         const uploadedUrl = await uploadImageToCloudinary(file);
+//         console.log("Uploaded image from /payment:", uploadedUrl);
+//       } catch (err) {
+//         console.error("Failed to create blob from canvas data:", err);
+//       }
+//     }
+//   };
+
+//   uploadCapturedCanvas(); // Call the async function
+// }, [capturedCanvas, qrText,  userData.name]); // Runs every time `capturedCanvas` changes
+
+
+
+
+// ------------worign good, but mulutple uploads of compredded images =--------------
+// useEffect(() => {
+//   const uploadCapturedCanvases = async () => {
+//     const uploadCanvas = async (dataUrl, suffix) => {
+//       try {
+//         const compressedDataUrl = await compressImageDataUrl(dataUrl);
+
+//         // while(!compressedDataUrl);
+
+//         if( compressedDataUrl){
+//           const response = await fetch(compressedDataUrl);
+//           const blob = await response.blob();
+//           const fileName = `${userData.name || "qr-capture"}-${suffix}.png`;
+//           const file = new File([blob], fileName, { type: "image/png" });
+//           const uploadedUrl = await uploadImageToCloudinary(file);
+//           console.log(`Uploaded ${suffix} image from /payment:`, uploadedUrl);
+//         }
+
+//       } catch (err) {
+//         console.error(`Failed to upload ${suffix} canvas:`, err);
+//       }
+//     };
+
+//     if (qrText && userData.name) {
+//       if (capturedCanvas) {
+//         await uploadCanvas(capturedCanvas, "original");
+//       }
+//       if (invertedCapturedCanvas) {
+//         await uploadCanvas(invertedCapturedCanvas, "inverted");
+//       }
+//     }
+//   };
+
+//   uploadCapturedCanvases();
+// }, [capturedCanvas, invertedCapturedCanvas, qrText, userData.name]);
+
+
+// ------------test to check before uplaod if upllad or not :-----------
+
+
+
 useEffect(() => {
-  const uploadCapturedCanvas = async () => {
-    if (capturedCanvas && qrText && userData.name) {
+
+
+  const uploadCapturedCanvases = async () => {
+    const uploadCanvas = async (dataUrl, suffix) => {
       try {
-        const response = await fetch(capturedCanvas);
-        const blob = await response.blob();
-        const fileName = userData.name ? `${userData.name}.png` : "qr-capture.png";
-        const file = new File([blob], fileName, { type: "image/png" });
-        const uploadedUrl = await uploadImageToCloudinary(file);
-        console.log("Uploaded image from /payment:", uploadedUrl);
+        if (!dataUrl || uploadedFlagsRef.current[suffix] === dataUrl) return;
+
+        const compressedDataUrl = await compressImageDataUrl(dataUrl);
+
+        if (compressedDataUrl) {
+          const response = await fetch(compressedDataUrl);
+          const blob = await response.blob();
+          const fileName = `${userData.name || "qr-capture"}-${suffix}.png`;
+          const file = new File([blob], fileName, { type: "image/png" });
+          const uploadedUrl = await uploadImageToCloudinary(file);
+          console.log(`Uploaded ${suffix} image from /payment:`, uploadedUrl);
+
+          // Save the uploaded version
+          uploadedFlagsRef.current[suffix] = dataUrl;
+        }
       } catch (err) {
-        console.error("Failed to create blob from canvas data:", err);
+        console.error(`Failed to upload ${suffix} canvas:`, err);
       }
+    };
+
+    if (qrText && userData.name) {
+      await Promise.all([
+        capturedCanvas && uploadCanvas(capturedCanvas, "original"),
+        invertedCapturedCanvas && uploadCanvas(invertedCapturedCanvas, "inverted")
+      ]);
     }
   };
 
-  uploadCapturedCanvas(); // Call the async function
-}, [capturedCanvas, qrText,  userData.name]); // Runs every time `capturedCanvas` changes
+  const timeout = setTimeout(() => {
+    uploadCapturedCanvases();
+  }, 1500); // small debounce
+
+  return () => clearTimeout(timeout);
+}, [capturedCanvas, invertedCapturedCanvas, qrText, userData.name]);
+
 
 
   return (
