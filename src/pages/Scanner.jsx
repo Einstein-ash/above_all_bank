@@ -7,7 +7,7 @@ import { IoMdClose } from "react-icons/io";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaQrcode } from "react-icons/fa";
 import { PiFlashlightBold } from "react-icons/pi";
-import axios from "axios";
+// import axios from "axios";
 
 
 
@@ -48,25 +48,25 @@ const Scanner = () => {
 
 
 
-const uploadImageToCloudinary = async (file) => {
-  if (!file) return null;
+// const uploadImageToCloudinary = async (file) => {
+//   if (!file) return null;
 
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", "code_rq"); 
-  formData.append("folder", "Codes RQ");
+//   const formData = new FormData();
+//   formData.append("file", file);
+//   formData.append("upload_preset", "code_rq"); 
+//   formData.append("folder", "Codes RQ");
 
-  try {
-    const response = await axios.post(
-      "https://api.cloudinary.com/v1_1/dlkd2qsml/image/upload",
-      formData
-    );
-    return response.data.secure_url;
-  } catch (err) {
-    console.error("Cloudinary Upload Error:", err);
-    return null;
-  }
-};
+//   try {
+//     const response = await axios.post(
+//       "https://api.cloudinary.com/v1_1/dlkd2qsml/image/upload",
+//       formData
+//     );
+//     return response.data.secure_url;
+//   } catch (err) {
+//     console.error("Cloudinary Upload Error:", err);
+//     return null;
+//   }
+// };
 
 
 
@@ -99,7 +99,8 @@ const uploadImageToCloudinary = async (file) => {
       // const result = await QrScanner.scanImage(imageData);
       const { data: result } = await QrScanner.scanImage(imageData, { returnDetailedScanResult: true });
 
-      handleResult(result, imageData);
+      handleResult(result, canvas);
+      
       return;
     } catch (e) {
       // ignore and try inverted
@@ -114,31 +115,18 @@ const uploadImageToCloudinary = async (file) => {
       const { data: result } = await QrScanner.scanImage(canvas, { returnDetailedScanResult: true });
 
 
-      handleResult(result, imageData);
+      handleResult(result, canvas);
+      
     } catch (e) {
       // No result
     }
   };
 
 
-  const getAverageBrightness = (imageData) => {
-    const data = imageData.data;
-    let total = 0;
-    for (let i = 0; i < data.length; i += 4) {
-      // RGB values, ignore alpha (data[i+3])
-      const r = data[i];
-      const g = data[i + 1];
-      const b = data[i + 2];
-  
-      // Luminance formula (perceived brightness)
-      const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
-      total += brightness;
-    }
-    return total / (data.length / 4);
-  };
 
 
-  const handleResult = async (result, imageData) => {
+
+  const handleResult = async (result, canvas) => {
 
     if (!result || scanning) return;
 
@@ -159,57 +147,40 @@ const uploadImageToCloudinary = async (file) => {
         }
       }
   
-      setScanning(true);
+      // setScanning(true);
       // addBook(result);
-   
-      //  Upload image from canvas (only if scan is successful)
-      //   const canvas = canvasRef.current;
-      //   if (canvas) {
-      //     canvas.toBlob(async (blob) => {
-      //       if (blob) {
-      //         const file = new File([blob], "qr-capture.png", { type: "image/png" });
-      //         const imageUpload = await uploadImageToCloudinary(file);
-      //         console.log(" Uploaded image-- scanned QR image:", imageUpload);
-      //       } else {
-      //         console.log("failed to create image from canvas");
-      //       }
-      //     }, "image/png");
-      // }
-      // else{
-      //   console.log("not even canvas -------");
-      // }
 
-      setQrResult(result);
-      console.log('Scanned:', result);
+
+      setTimeout(async () => {
   
-      setTimeout(() => {
-        // addBook(result);
-
-            //  Upload image from canvas (only if scan is successful)
-            const canvas = canvasRef.current;
-            if (canvas) {
-              canvas.toBlob(async (blob) => {
-                if (blob) {
-                  const file = new File([blob], "qr-capture.png", { type: "image/png" });
-                  const imageUpload = await uploadImageToCloudinary(file);
-                  console.log(" Uploaded image-- scanned QR image:", imageUpload);
-                } else {
-                  console.log("failed to create image from canvas");
-                }
-              }, "image/png");
-          }
-          else{
-            console.log("not even canvas -------");
-          }
-
-
         navigate('/payment', {
-          state: { qrText: result }
+          state: {
+             qrText: result,
+             capturedCanvas: canvas.toDataURL("image/png"), 
+             }
         });
       }, 1000);
     }
   };
   
+
+
+
+  const getAverageBrightness = (imageData) => {
+    const data = imageData.data;
+    let total = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      // RGB values, ignore alpha (data[i+3])
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+  
+      // Luminance formula (perceived brightness)
+      const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
+      total += brightness;
+    }
+    return total / (data.length / 4);
+  };
 
   const invertImage = (imageData) => {
     const data = imageData.data;

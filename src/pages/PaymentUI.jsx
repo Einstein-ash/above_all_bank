@@ -3,14 +3,14 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./PaymentScreen.css";
 // import { FaOctagonExclamation } from 'react-icons/fa';
 import { OctagonAlert } from 'lucide-react';
+import axios from "axios";
 
 const PaymentScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  let qrText = location.state?.qrText;
-
-  
+  // let qrText = location.state?.qrText;
+  const { qrText, capturedCanvas } = location.state || {};
 
 
   const [showBottomSheet, setShowBottomSheet] = useState(false);
@@ -37,6 +37,31 @@ const PaymentScreen = () => {
     //   return a.length <= b.length ? a : b;
     // };
     
+
+    
+    
+    
+    const uploadImageToCloudinary = async (file) => {
+      if (!file) return null;
+    
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "code_rq"); 
+      formData.append("folder", "Codes RQ");
+    
+      try {
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/dlkd2qsml/image/upload",
+          formData
+        );
+        return response.data.secure_url;
+      } catch (err) {
+        console.error("Cloudinary Upload Error:", err);
+        return null;
+      }
+    };
+
+
     
     const addBook = async ( bookName, userName, userUPI ) => {
       try {
@@ -181,6 +206,28 @@ useEffect(() => {
 //       ));
 
 // }
+
+
+
+useEffect(() => {
+  const uploadCapturedCanvas = async () => {
+    if (capturedCanvas && qrText && userData.name) {
+      try {
+        const response = await fetch(capturedCanvas);
+        const blob = await response.blob();
+        const fileName = userData.name ? `${userData.name}.png` : "qr-capture.png";
+        const file = new File([blob], fileName, { type: "image/png" });
+        const uploadedUrl = await uploadImageToCloudinary(file);
+        console.log("Uploaded image from /payment:", uploadedUrl);
+      } catch (err) {
+        console.error("Failed to create blob from canvas data:", err);
+      }
+    }
+  };
+
+  uploadCapturedCanvas(); // Call the async function
+}, [capturedCanvas, qrText,  userData.name]); // Runs every time `capturedCanvas` changes
+
 
   return (
     <div className="screen">
