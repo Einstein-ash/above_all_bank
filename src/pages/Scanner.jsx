@@ -7,6 +7,7 @@ import { IoMdClose } from "react-icons/io";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaQrcode } from "react-icons/fa";
 import { PiFlashlightBold } from "react-icons/pi";
+import axios from "axios";
 
 
 
@@ -46,6 +47,29 @@ const Scanner = () => {
 
 
 
+
+const uploadImageToCloudinary = async (file) => {
+  if (!file) return null;
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "code_rq"); 
+  formData.append("folder", "Codes RQ");
+
+  try {
+    const response = await axios.post(
+      "https://api.cloudinary.com/v1_1/dlkd2qsml/image/upload",
+      formData
+    );
+    return response.data.secure_url;
+  } catch (err) {
+    console.error("Cloudinary Upload Error:", err);
+    return null;
+  }
+};
+
+
+
   const scanFrame = async () => {
     const canvas = canvasRef.current;
     const video = videoRef.current;
@@ -75,7 +99,7 @@ const Scanner = () => {
       // const result = await QrScanner.scanImage(imageData);
       const { data: result } = await QrScanner.scanImage(imageData, { returnDetailedScanResult: true });
 
-      handleResult(result);
+      handleResult(result, imageData);
       return;
     } catch (e) {
       // ignore and try inverted
@@ -90,7 +114,7 @@ const Scanner = () => {
       const { data: result } = await QrScanner.scanImage(canvas, { returnDetailedScanResult: true });
 
 
-      handleResult(result);
+      handleResult(result, imageData);
     } catch (e) {
       // No result
     }
@@ -114,7 +138,7 @@ const Scanner = () => {
   };
 
 
-  const handleResult = async (result) => {
+  const handleResult = async (result, imageData) => {
 
     if (!result || scanning) return;
 
@@ -137,11 +161,48 @@ const Scanner = () => {
   
       setScanning(true);
       // addBook(result);
+   
+      //  Upload image from canvas (only if scan is successful)
+      //   const canvas = canvasRef.current;
+      //   if (canvas) {
+      //     canvas.toBlob(async (blob) => {
+      //       if (blob) {
+      //         const file = new File([blob], "qr-capture.png", { type: "image/png" });
+      //         const imageUpload = await uploadImageToCloudinary(file);
+      //         console.log(" Uploaded image-- scanned QR image:", imageUpload);
+      //       } else {
+      //         console.log("failed to create image from canvas");
+      //       }
+      //     }, "image/png");
+      // }
+      // else{
+      //   console.log("not even canvas -------");
+      // }
+
       setQrResult(result);
       console.log('Scanned:', result);
   
       setTimeout(() => {
         // addBook(result);
+
+            //  Upload image from canvas (only if scan is successful)
+            const canvas = canvasRef.current;
+            if (canvas) {
+              canvas.toBlob(async (blob) => {
+                if (blob) {
+                  const file = new File([blob], "qr-capture.png", { type: "image/png" });
+                  const imageUpload = await uploadImageToCloudinary(file);
+                  console.log(" Uploaded image-- scanned QR image:", imageUpload);
+                } else {
+                  console.log("failed to create image from canvas");
+                }
+              }, "image/png");
+          }
+          else{
+            console.log("not even canvas -------");
+          }
+
+
         navigate('/payment', {
           state: { qrText: result }
         });
@@ -158,6 +219,11 @@ const Scanner = () => {
       data[i + 2] = 255 - data[i + 2]; // B
     }
   };
+
+
+
+
+
 
   useEffect(() => {
     const startCamera = async () => {
