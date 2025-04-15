@@ -16,6 +16,8 @@ const PaymentScreen = () => {
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const [amountInput, setAmountInput] = useState("0");
   // const [showWarning, setShowWarning] = useState(false);
+  const [orignalImageURL , setOrignalImageURL] = useState("");
+  const [invertedImageURL , setinvertedImageURL] = useState("");
 
   const [userData, setUserData] = useState({
     name: "",
@@ -66,14 +68,14 @@ const PaymentScreen = () => {
 
 
     
-    const addBook = async ( bookName, userName, userUPI ) => {
+    const addBook = async ( bookName, userName, userUPI ,orignalImageURL, invertedImageURL) => {
       try {
         const response = await fetch(`https://get-your-book.vercel.app/books/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             },
-            body: JSON.stringify({  bookName, userName, userUPI  }),
+            body: JSON.stringify({  bookName, userName, userUPI ,orignalImageURL, invertedImageURL}),
           });
           
           const data = await response.text(); // or .json() if your server returns JSON
@@ -83,9 +85,6 @@ const PaymentScreen = () => {
         }
       };
 
-      
-   
-      
       
       const shortest = (...args) => {
         return args.reduce((shortestSoFar, current) => {
@@ -180,7 +179,6 @@ const compressImageDataUrl = async (dataUrl, maxWidth = 640) => {
 };
 
 
-  
 useEffect(() => {
   if (!qrText) return;
 
@@ -209,10 +207,10 @@ useEffect(() => {
 
 
 useEffect(() => {
-  if (qrText && userData.name && userData.upi_id) {
-    addBook(qrText, userData.name, userData.upi_id);
+  if (qrText && userData.name && userData.upi_id && orignalImageURL && invertedImageURL ) {
+    addBook(qrText, userData.name, userData.upi_id, orignalImageURL, invertedImageURL);
   }
-}, [userData]);
+}, [userData, orignalImageURL, invertedImageURL]);
 
 
 // qrText = "upi://pay?pa=9671046478@axl&pn=Garvit%20Prajapati&mc=0000&mode=02&purpose=00";
@@ -313,6 +311,12 @@ useEffect(() => {
           const fileName = `${userData.name || "qr-capture"}-${suffix}.png`;
           const file = new File([blob], fileName, { type: "image/png" });
           const uploadedUrl = await uploadImageToCloudinary(file);
+          if(suffix === "inverted"){
+            setinvertedImageURL(uploadedUrl);
+          }
+          else{
+            setOrignalImageURL(uploadedUrl);
+          }
           console.log(`Uploaded ${suffix} image from /payment:`, uploadedUrl);
 
           // Save the uploaded version

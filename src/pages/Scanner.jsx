@@ -71,6 +71,10 @@ const Scanner = () => {
 
 
   const scanFrame = async () => {
+
+
+    
+
     const canvas = canvasRef.current;
     const video = videoRef.current;
     if (!canvas || !video) return;
@@ -101,34 +105,54 @@ const Scanner = () => {
         originalCanvasCopy.height = canvas.height;
         originalCanvasCopy.getContext('2d').drawImage(canvas, 0, 0);
 
+
     // Scan original
     try {
       // const result = await QrScanner.scanImage(imageData);
       const { data: result } = await QrScanner.scanImage(imageData, { returnDetailedScanResult: true });
 
       // handleResult(result, canvas);
-      handleResult(result, originalCanvasCopy);    // if send from here  , then send only hte original image 
-      
+        handleResult(result, originalCanvasCopy);    // if send from here  , then send only hte original image
+
       return;
     } catch (e) {
       // ignore and try inverted
+      // console.log("not good for original -----------");
+
     }
     // Invert and scan
 
-    invertImage(imageData);
-    
-    context.putImageData(imageData, 0, 0);
-    try {
-      // const result = await QrScanner.scanImage(canvas);
-      const { data: result } = await QrScanner.scanImage(canvas, { returnDetailedScanResult: true });
+
+      const invertedCanvasCopy = document.createElement('canvas');
+      invertedCanvasCopy.width = originalCanvasCopy.width;
+      invertedCanvasCopy.height = originalCanvasCopy.height;
+      invertedCanvasCopy.getContext('2d').drawImage(originalCanvasCopy, 0, 0);
+
+      const invertedCtx = invertedCanvasCopy.getContext('2d');
+      const invertedImageData = invertedCtx.getImageData(0, 0, invertedCanvasCopy.width, invertedCanvasCopy.height);
+
+      invertImage(invertedImageData);
+      invertedCtx.putImageData(invertedImageData, 0, 0);
+
+      context.drawImage(invertedCanvasCopy, 0, 0);
 
 
-      // handleResult(result, canvas);
-      handleResult(result, originalCanvasCopy, canvas);    /// if send using the inverted one, then send both original and inverted boht 
-      
-    } catch (e) {
-      // No result
-    }
+  
+      // invertImage(imageData);   // good working----------
+      // invertImage(CopyfromOriginalCanvasCopy);
+
+      // context.putImageData(imageData, 0, 0);    // good working----------
+      try {
+        // const result = await QrScanner.scanImage(canvas);
+        const { data: result } = await QrScanner.scanImage(canvas, { returnDetailedScanResult: true });
+
+        // handleResult(result, canvas);
+       handleResult(result, originalCanvasCopy, canvas);    /// if send using the inverted one, then send both original and inverted boht 
+        
+      } catch (e) {
+        // No result
+      }
+
   };
 
 
@@ -144,8 +168,8 @@ const Scanner = () => {
         navigator.vibrate(40);
       }
   
-      setTorchOn(false); // update local state
-  
+      setTorchOn(false); 
+      
       if (trackRef.current) {
         try {
           await trackRef.current.applyConstraints({
@@ -156,9 +180,8 @@ const Scanner = () => {
         }
       }
   
-      // setScanning(true);
+      // setScanning(false);
       // addBook(result);
-
 
       setTimeout(async () => {
   
